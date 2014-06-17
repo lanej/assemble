@@ -1,4 +1,4 @@
-class Rivet::Client::Tag < Cistern::Model
+class Assemble::Client::Tag < Cistern::Model
 
   identity :id, aliases: ["ObjectID", "_refObjectUUID"]
 

@@ -1,4 +1,4 @@
-require "rivet/version"
+require "assemble/version"
 
 require 'addressable/uri'
 require 'cistern'
@@ -6,10 +6,10 @@ require 'faraday'
 require 'faraday_middleware'
 require 'logger'
 
-module Rivet
+module Assemble
   # Your code goes here...
 end
 
-require 'rivet/logger'
-require 'rivet/response'
-require 'rivet/client'
+require 'assemble/logger'
+require 'assemble/response'
+require 'assemble/client'

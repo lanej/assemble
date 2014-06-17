@@ -1,4 +1,4 @@
-class Rivet::Logger < Faraday::Response::Middleware
+class Assemble::Logger < Faraday::Response::Middleware
   extend Forwardable
 
   def initialize(app, logger = nil)

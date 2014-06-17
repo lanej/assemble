@@ -1,6 +1,6 @@
-class Rivet::Client::Tags < Cistern::Collection
+class Assemble::Client::Tags < Cistern::Collection
 
-  model Rivet::Client::Tag
+  model Assemble::Client::Tag
 
   def all(options={})
     results = self.connection.get_tags.body["QueryResult"]["Results"]

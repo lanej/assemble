@@ -1,4 +1,4 @@
-class Rivet::Client
+class Assemble::Client
   class Real
     def create_tag(attributes)
       request(

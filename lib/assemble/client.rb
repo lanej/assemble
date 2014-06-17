@@ -1,7 +1,7 @@
-class Rivet::Client < Cistern::Service
+class Assemble::Client < Cistern::Service
 
-  model_path "rivet/models"
-  request_path "rivet/requests"
+  model_path "assemble/models"
+  request_path "assemble/requests"
 
   # tags
   model :tag
@@ -43,7 +43,7 @@ class Rivet::Client < Cistern::Service
         builder.request :multipart
         builder.request :json
 
-        builder.use Rivet::Logger, logger
+        builder.use Assemble::Logger, logger
 
         builder.adapter(*adapter)
       end
@@ -72,7 +72,7 @@ class Rivet::Client < Cistern::Service
         req.body = body
       end
 
-      Rivet::Response.new(
+      Assemble::Response.new(
         :status  => response.status,
         :headers => response.headers,
         :body    => response.body,
@@ -103,7 +103,7 @@ class Rivet::Client < Cistern::Service
         "Content-Type" => "application/json; charset=utf-8"
       }.merge(options[:headers] || {})
 
-      Rivet::Response.new(
+      Assemble::Response.new(
         :status  => status,
         :headers => headers,
         :body    => body,
@@ -118,4 +118,4 @@ class Rivet::Client < Cistern::Service
       File.join(@url, path)
     end
   end # Mock
-end # Rivet::Client
+end # Assemble::Client

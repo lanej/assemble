@@ -20,5 +20,5 @@ tmp
 *.o
 *.a
 mkmf.log
-.rivet
-.rivet.security
+.assemble
+.assemble.security

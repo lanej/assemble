@@ -1,4 +1,4 @@
-class Rivet::Response
+class Assemble::Response
   class Error < StandardError
     attr_reader :response
 

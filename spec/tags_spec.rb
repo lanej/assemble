@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'tags' do
   let!(:client) { create_client }
-  let!(:tag) { client.tags.create(name: "rivet") }
+  let!(:tag) { client.tags.create(name: "assemble") }
 
   after(:each) { tag.destroy}
 
@@ -13,8 +13,8 @@ describe 'tags' do
   it "should get a tag" do
     fetched = client.tags.get(tag.identity)
 
-    expect(tag.name).to eq("rivet")
+    expect(tag.name).to eq("assemble")
     expect(fetched).to eq(tag)
-    expect(fetched.name).to eq("rivet")
+    expect(fetched.name).to eq("assemble")
   end
 end

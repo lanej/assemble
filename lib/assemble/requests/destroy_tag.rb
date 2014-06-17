@@ -1,9 +1,9 @@
-class Rivet::Client
+class Assemble::Client
   class Real
-    def update_tag(id, attributes)
+    def destroy_tag(id)
       request(
         :body   => {"Tag" => attributes},
-        :path   => "/tag/#{id}",
+        :path   => "/tag/create",
         :method => :post,
       )
     end

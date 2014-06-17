@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rivet/version'
+require 'assemble/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rivet"
-  spec.version       = Rivet::VERSION
+  spec.name          = "assemble"
+  spec.version       = Assemble::VERSION
   spec.authors       = ["Josh Lane"]
   spec.email         = ["me@joshualane.com"]
   spec.summary       = %q{Rally REST API Client}
