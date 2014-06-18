@@ -32,7 +32,7 @@ class Assemble::Client < Cistern::Service
 
       @connection = Faraday.new({url: @url}.merge(connection_options)) do |builder|
         # response
-        builder.response :json
+        builder.response :json, content_type: /\bjavascript$/
 
         # request
         builder.request :retry,
@@ -89,9 +89,37 @@ class Assemble::Client < Cistern::Service
     def self.data
       @data ||= begin
                   {
-                    :tags => {},
+                    :subscriptions => {},
+                    :tags          => {},
+                    :workspaces    => {},
                   }
                 end
+    end
+
+    attr_reader :subscription, :workspace, :url
+
+    def initialize(options={})
+      base_url = options[:url] || ENV['RALLY_URL'] || "https://rally1.rallydev.com/slm/webservice/"
+      version  = options[:version] || "v3.0"
+
+      @url = URI.parse(File.join(base_url, version))
+
+      subscription_name = "Engine Yard"
+      existing_subscription = self.data[:subscriptions].values.find { |s| s["Name"] == subscription_name }
+      new_subscription = Proc.new do
+        uuid = SecureRandom.uuid
+        self.data[:subscriptions][uuid] = {"Name" => subscription_name, "ObjectID" => uuid, "_ref" => url_for("/subscriptions/#{uuid}") }
+      end
+
+      workspace_name = "Product Engineering"
+      existing_workspace = self.data[:workspaces].values.find { |s| s["Name"] == workspace_name }
+      new_workspace = Proc.new do
+        uuid = SecureRandom.uuid
+        self.data[:workspaces][uuid] = {"Name" => workspace_name, "ObjectID" => uuid, "_ref" => url_for("/workspaces/#{uuid}") }
+      end
+
+      @subscription = existing_subscription || new_subscription.call
+      @workspace    = existing_workspace || new_workspace.call
     end
 
     def response(options={})
@@ -100,7 +128,7 @@ class Assemble::Client < Cistern::Service
       status  = options[:status] || 200
       body    = options[:body]
       headers = {
-        "Content-Type" => "application/json; charset=utf-8"
+        "Content-Type" => "text/javascript; charset=utf-8"
       }.merge(options[:headers] || {})
 
       Assemble::Response.new(
@@ -115,7 +143,21 @@ class Assemble::Client < Cistern::Service
     end
 
     def url_for(path)
-      File.join(@url, path)
+      File.join(self.url.to_s, path)
+    end
+
+    def find(collection, id)
+      self.data[collection][id] || Assemble::Response.new(
+        :status => 404, # this is actually a 200
+        :body => {
+          "OperationResult" => {
+            "Errors" => [
+              "Cannot find object to read"
+            ],
+            "Warnings" => []
+          }
+        }
+      ).raise!
     end
   end # Mock
 end # Assemble::Client

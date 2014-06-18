@@ -17,4 +17,8 @@ describe 'tags' do
     expect(fetched).to eq(tag)
     expect(fetched.name).to eq("assemble")
   end
+
+  it "should not create a duplicate tag" do # just returns the existing one
+    expect { client.tags.create(name: "assemble") }.not_to change { client.tags.all.total }
+  end
 end
