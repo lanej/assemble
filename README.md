@@ -1,4 +1,4 @@
-# Rivet
+# Assemble
 
 TODO: Write a gem description
 
